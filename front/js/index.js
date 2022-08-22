@@ -2,6 +2,9 @@ class Product{
   constructor(produit){
     
     produit && Object.assign(this, produit);
+    /*Object.assign va assigner toutes les propriétes de l'objet de produit dans l'objet this mais sans ecraser celles qui existent
+        déjà.
+        THIS represente un object de la classe. */
   
   }
 }

@@ -1,8 +1,4 @@
 
-/*let choix = localStorage.getItem("choix");
-choix= JSON.parse(choix);
-console.log(choix);*/
-
 let commande =JSON.parse(localStorage.getItem("commande"));
 
 console.log("voici ma commande",commande);
@@ -12,12 +8,9 @@ console.log("voici ma commande",commande);
     fetch(`http://localhost:3000/api/products/${commande[0].id}`)
         .then (data => data.json())
         .then (panier => {
-            console.log(panier.imageUrl);
+            console.log(panier);
             
-            let totalPrice=panier.price*commande[0].quantite;
-            //console.log(totalPrice);
-
-        
+            let totalPrice=panier.price*commande[0].quantite;        
 
         document.getElementById("totalPrice").innerText=totalPrice;  
         document.getElementById("totalQuantity").innerText=commande[0].quantite;

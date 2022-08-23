@@ -11,9 +11,12 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Demande de l'article en
     document.getElementById("description").innerText=`${canape.description}`;// descritption
     document.querySelector(".item__img").innerHTML=`<img src="${canape.imageUrl}" alt="${canape.altTxt}"/>`; //Sa photo
 
-    for(let i=0; i<`${canape.colors.length}`;i++){    
-    document.getElementById("colors").innerHTML+= `<option value="${canape.colors[i]}">${canape.colors[i]}</option>;`;
-    }
+    
+    canape.colors.forEach(element => {        
+   
+    document.getElementById("colors").innerHTML+= `<option value="${element}">${element}</option>;`;
+    
+    });
 
     let choixCouleur=document.getElementById("colors");         
     let quantite=document.getElementById("quantity");                    
@@ -31,14 +34,12 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Demande de l'article en
        
         let panier =valide(); //on crée un objet avec une couelur un id et une quantité
         panier;
-        console.log("J'ajoute l'article dans mon panier : ", panier);
         
-       /* let save=saveArticle(valide()); // on le stock sur le local storage
-        save;*/
+        
 
         let produit = addArticle(panier); // on recupere l'article qu'on stock dans un tableau puis dans le local storage
         produit; 
-        console.log("Mon panier est composé de : ", produit );
+        
 
     });
     
@@ -52,13 +53,39 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Demande de l'article en
    }
 
    function addArticle(produit){
-    let commande= [];
-    /*let produit = localStorage.getItem("commande");
-    produit=JSON.parse(produit);*/
     
-    commande.push(produit);
-    saveArticle(commande);
-    return commande;
+    let stock = localStorage.getItem("commande");    
+
+    if (stock==null){
+        stock=[];
+    }
+    else{
+     stock=JSON.parse(stock);
+    } 
+
+    let chercheId = stock.find(p => p.id == produit.id);
+    let chercheCouleur= stock.find(p=> p.couleur==produit.couleur);
+    
+
+    console.log(produit.couleur);
+
+    if (chercheId && chercheCouleur != undefined){
+        chercheCouleur.quantite++;
+    }
+
+    else{        
+        stock.push(produit);
+    }
+    
+
+    
+    
+    
+    //console.log("actuellement mon voici mon tableau",stock);
+
+    saveArticle(stock);
+    
+    
     
    }
 

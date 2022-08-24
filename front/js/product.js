@@ -66,11 +66,15 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Demande de l'article en
     let chercheId = stock.find(p => p.id == produit.id);
     let chercheCouleur= stock.find(p=> p.couleur==produit.couleur);
     
-
+    
     console.log(produit.couleur);
+    //console.log(produit.id);
+    
 
     if (chercheId && chercheCouleur != undefined){
-        chercheCouleur.quantite++;
+       let quantite = JSON.parse(chercheCouleur.quantite) + JSON.parse(produit.quantite);
+       console.log("Qté pécedent : ",chercheCouleur.quantite ," + nvelle Qté : ", produit.quantite, " = " , quantite);
+       chercheCouleur.quantite=quantite;
     }
 
     else{        
@@ -78,14 +82,7 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Demande de l'article en
     }
     
 
-    
-    
-    
-    //console.log("actuellement mon voici mon tableau",stock);
-
-    saveArticle(stock);
-    
-    
+    saveArticle(stock);   
     
    }
 

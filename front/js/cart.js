@@ -21,7 +21,7 @@ else{
                 
                 
                 let resume=document.getElementById("cart__items")
-                resume.innerHTML+=  `<article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
+                resume.innerHTML+=  `<article class="cart__item" data-id="${element.id}" data-color="${element.couleur}">
                                         <div class="cart__item__img">
                                             <img src="${panier.imageUrl}" alt="${panier.altTxt}">
                                         </div>
@@ -51,15 +51,15 @@ else{
 
                 })    
 
-                document.querySelector(".deleteItem").addEventListener("click",()=>{
+                /*document.querySelector(".deleteItem").addEventListener("click",()=>{
                     console.log("Je supprime l'article", element);
                     localStorage.clear();
                     resume.innerHTML=`<p> ${panier.name} est supprimé du panier </p>`;    
                 
-                    /*document.getElementById("totalPrice").innerText=0;
-                    document.getElementById("totalQuantity").innerText=0;*/
+                    document.getElementById("totalPrice").innerText=0;
+                    document.getElementById("totalQuantity").innerText=0;
                     
-                })
+                })*/
             })
 
     });

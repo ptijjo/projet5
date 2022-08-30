@@ -1,7 +1,16 @@
 
 let commande =JSON.parse(localStorage.getItem("commande"));
 
-console.log("voici ma commande",commande);
+
+class Quantite{
+    constructor(id,couleur,nombre){
+        this.id=id;
+        this.couleur=couleur;
+        this.quantite=nombre;        
+    }
+}
+
+//console.log("voici ma commande",commande);
 if (commande==null){
     document.getElementById("cart__items").innerHTML= `<p> Votre panier est vide</p>`;
 }
@@ -10,18 +19,10 @@ else{
 
         fetch(`http://localhost:3000/api/products/${element.id}`)
             .then (data => data.json())
-            .then (panier => {
-                console.log(element);
-                
-                /*let totalPrice=panier.price*element.quantite;        
-
-                document.getElementById("totalPrice").innerText=totalPrice;  
-                document.getElementById("totalQuantity").innerText=element.quantite;*/
+            .then (panier => {                 
                 
                 
-                
-                let resume=document.getElementById("cart__items")
-                resume.innerHTML+=  `<article class="cart__item" data-id="${element.id}" data-color="${element.couleur}">
+                document.getElementById("cart__items").innerHTML+=  `<article class="cart__item" data-id="${element.id}" data-color="${element.couleur}">
                                         <div class="cart__item__img">
                                             <img src="${panier.imageUrl}" alt="${panier.altTxt}">
                                         </div>
@@ -41,15 +42,30 @@ else{
                                                 </div>
                                             </div>
                                         </div>
-                                    </article>`;
+                                    </article>`;       
 
+                                    
 
-                document.querySelector(".itemQuantity").addEventListener("click",()=>{
+                                // Modification de quantité    
+                                    let prixTotalArticle;
+                                    let qte = document.getElementsByClassName("itemQuantity");
+                                    console.log("Nous avons ",qte.length," articles dont on peut modifier la qte");
 
-
-
-
-                })    
+                                    qte.addEventListener("change",function(){                                   
+                                                                                
+                                        console.log(this.value);
+                                        let nvelleCommande = new Quantite(element.id,element.couleur,this.value);
+                                    
+                                        commande.splice(0,1,nvelleCommande);
+                                        console.log(commande);
+                                        
+                                        prixTotalArticle = this.value*this.price;                                     
+                                                                             
+                                        
+                                    })
+                                        
+             })
+                
 
                 /*document.querySelector(".deleteItem").addEventListener("click",()=>{
                     console.log("Je supprime l'article", element);
@@ -60,8 +76,15 @@ else{
                     document.getElementById("totalQuantity").innerText=0;
                     
                 })*/
-            })
+    })
 
-    });
+            
+
+    
+
+    
+
+
+
 }
 

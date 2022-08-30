@@ -1,6 +1,9 @@
 
 let commande =JSON.parse(localStorage.getItem("commande"));
 
+function saveArticle(produit){
+    return localStorage.setItem("commande",JSON.stringify(produit));  
+   }
 
 class Quantite{
     constructor(id,couleur,nombre){
@@ -50,19 +53,19 @@ else{
                                     let prixTotalArticle;
                                     let qte = document.getElementsByClassName("itemQuantity");
                                     console.log("Nous avons ",qte.length," articles dont on peut modifier la qte");
-
-                                    qte.addEventListener("change",function(){                                   
+                                for(let i=0; i<qte.length;i++){
+                                    qte[i].addEventListener("change",function(){                                   
                                                                                 
                                         console.log(this.value);
                                         let nvelleCommande = new Quantite(element.id,element.couleur,this.value);
                                     
-                                        commande.splice(0,1,nvelleCommande);
+                                        commande.splice(i,1,nvelleCommande);
                                         console.log(commande);
-                                        
-                                        prixTotalArticle = this.value*this.price;                                     
-                                                                             
-                                        
+                                        saveArticle(commande);
+                                                                                                                 
+                                            
                                     })
+                                }
                                         
              })
                 
@@ -77,6 +80,9 @@ else{
                     
                 })*/
     })
+    
+
+    
 
             
 

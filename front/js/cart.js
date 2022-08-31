@@ -28,8 +28,7 @@ else{
 
         fetch(`http://localhost:3000/api/products/${commande[i].id}`)
             .then (data => data.json())
-            .then (panier => {                 
-                
+            .then (panier => {                             
                 //console.log(panier);
                 document.getElementById("cart__items").innerHTML+=  `<article class="cart__item" data-id="${commande[i].id}" data-color="${commande[i].couleur}">
                                         <div class="cart__item__img">
@@ -55,32 +54,21 @@ else{
 
                                     
 
-                // Modification de quantité    
-                let prixTotalArticle;
-                let qte = document.getElementsByClassName("itemQuantity");
-                    
-                for(let i=0; i<qte.length;i++){
-                    
-                    qte[i].addEventListener("change",function(){                                   
-                                                                
+                // Modification de quantité                    
+                let qte = document.getElementsByClassName("itemQuantity");                    
+                for(let i=0; i<qte.length;i++){                    
+                    qte[i].addEventListener("change",function(){                                                                                           
                         let nvelleCommande = new Quantite(commande[i].id,commande[i].couleur,this.value);                                        
                         commande.splice(i,1,nvelleCommande);
                         console.log(commande);     
                         localStorage.clear;
-                        saveArticle(commande);   
-                        fetch(`http://localhost:3000/api/products/${commande[i].id}`)
-                        .then (data => data.json())
-                        .then (prixQte => {     
-                            prixTotalArticle= prixQte.price*JSON.parse(nvelleCommande.quantite);
-                            console.log(prixTotalArticle);                          
-                            
-                        })
+                        saveArticle(commande);  
+                        location.reload(); 
                     })
                 }   
-                // Suppression d'element
 
-                let supprimer = document.getElementsByClassName("deleteItem")
-                //console.log(supprimer.length);
+                // Suppression d'element
+                let supprimer = document.getElementsByClassName("deleteItem");
                 for(let i=0; i<supprimer.length;i++){
                     supprimer[i].addEventListener("click", () =>{
                         console.log("Article supprimé est : ",commande[i]);
@@ -90,47 +78,30 @@ else{
                         saveArticle(commande);
                         location.reload();
                         console.log(commande.length);
-                         if(commande.length=0){
+                        if(commande.length=0){
                             localStorage.clear();
-                        }
-                        
-
-
+                        }                   
                     })
-                    
+                } 
+
+                // Affichage du prix total
+                let prixTotalArticle=0;
+                let totalQuantite=0;               
+                for(let i=0;i<commande.length;i++){                        
+                            prixTotalArticle+= panier.price*JSON.parse(commande[i].quantite);
+                            console.log(prixTotalArticle);                      
+                    let chiffre = JSON.parse(commande[i].quantite);
+                    totalQuantite+= chiffre;                    
                 }
-                
-                
-                                        
-            })
-                
-
-                
-                
-                /*supprimer.addEventListener("click",()=>{
-                    console.log("Je supprime l'article", element);
-                    localStorage.clear();
-                
-                }*/
-
-                    /*resume.innerHTML=`<p> ${panier.name} est supprimé du panier </p>`;    
-                
-                    document.getElementById("totalPrice").innerText=0;
-                    document.getElementById("totalQuantity").innerText=0;
-                    
-                })*/
+                document.getElementById('totalQuantity').innerText=totalQuantite;
+                document.getElementById('totalPrice').innerText=prixTotalArticle;                                        
+            })               
     }
-    
 
-    
+    // Passer la commande
 
-            
-
-    
-
-    
-
-
-
+    document.getElementById("order").addEventListener("click",()=>{
+        
+    })
 }
 

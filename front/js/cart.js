@@ -10,12 +10,26 @@ function saveArticle(produit){
     localStorage.removeItem(article);
    }
 
+   function saveContact(produit){
+    return localStorage.setItem("Contact",JSON.stringify(produit));  
+   }
+
 
 class Quantite{
     constructor(id,couleur,nombre){
         this.id=id;
         this.couleur=couleur;
         this.quantite=nombre;       
+    }
+}
+
+class Contact{
+    constructor(firstName,lastName,adresse,city,email){
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.adresse=adresse;
+        this.city=city;
+        this.email=email;
     }
 }
 
@@ -98,9 +112,69 @@ else{
             })               
     }
 
-    // Passer la commande
+    // Validation du formulaire
+    let prenom=document.getElementById("firstName");
+    prenom.addEventListener('input',function(e){
+        if (e.target.value.match(/^[a-zA-Z\s-]{2,30}$/)){
+            document.getElementById('firstNameErrorMsg').innerText="";
+        }
+        else{
+            document.getElementById('firstNameErrorMsg').innerText="Ce n'est pas un prénom correct";
+        }        
+    })
 
+    let nom=document.getElementById("lastName")
+    nom.addEventListener('input',function(e){
+        if (e.target.value.match(/^[a-zA-Z\s'-]{2,30}$/)){
+            document.getElementById('lastNameErrorMsg').innerText="";
+        }
+        else{
+            document.getElementById('lastNameErrorMsg').innerText="Ce n'est pas un nom correct";
+        }        
+    })
+
+    let adresse=document.getElementById("address")
+    adresse.addEventListener('input',function(e){
+        if (e.target.value.match(/^[a-zA-Z0-9\s-]{3,}$/)){
+            document.getElementById('addressErrorMsg').innerText="";
+        }
+        else{
+            document.getElementById('addressErrorMsg').innerText="Ce n'est pas une adresse correct";
+        }        
+    })
+
+
+    let ville=document.getElementById("city")
+    ville.addEventListener('input',function(e){
+        if (e.target.value.match(/^[a-zA-Z\s'-]{2,30}$/)){
+            document.getElementById('cityErrorMsg').innerText="";
+        }
+        else{
+            document.getElementById('cityErrorMsg').innerText="Ce n'est pas une ville correct";
+        }        
+    })
+
+
+    let email=document.getElementById("email")
+    email.addEventListener('input',function(e){
+        if (e.target.value.match(/^[a-zA-Z0-9\s-.]+@[a-z]+\.[a-z]{2,4}$/)){
+            document.getElementById('emailErrorMsg').innerText="";
+        }
+        else{
+            document.getElementById('emailErrorMsg').innerText="Ce n'est pas un email correct";
+        }        
+    })
+
+    
+    
+    //Passer la commande
+    
     document.getElementById("order").addEventListener("click",()=>{
+        let contact = new Contact(prenom.value,nom.value,adresse.value,ville.value,email.value)
+        console.log(contact);
+        saveContact(contact);
+        window.location.href=`./confirmation.html?id=${commande[0].id}`;
+        
         
     })
 }

@@ -16,7 +16,7 @@ fetch("http://localhost:3000/api/products")
 
   .then (listArticle =>{ // ce then retourne le then précedent dc data.json qui deviendra listeArticle
     for (let article of listArticle) {
-      let product = new Product(article);
+      let product = new Product(article); // on ajoute un html depuis l'id items sans ecraser leprécédent
       document.getElementById("items").innerHTML+= `<a href="./product.html?id=${product._id}">
                                                       <article>
                                                         <img src="${product.imageUrl}" alt="${product.altTxt}">
@@ -25,7 +25,7 @@ fetch("http://localhost:3000/api/products")
                                                       </article>
                                                     </a>`;
     }
-    
+    // on rajoute un lien avec l'id du produit, son image , son nom, sa description et son alt qui renvoie sur la page produit.
   })
 
 

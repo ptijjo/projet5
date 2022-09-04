@@ -1,5 +1,5 @@
-const numeroCommande = window.location.search.split("?").join("").substr(25);
+const numeroCommande = window.location.search.split("?").join("").substr(3);
 console.log(numeroCommande);
 
 document.getElementById("orderId").innerText=numeroCommande;
-localStorage.clear();
+//localStorage.clear();

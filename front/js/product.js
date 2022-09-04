@@ -34,19 +34,17 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Demande de l'article en
        
         let panier =valide(); //on crée un objet avec une couelur un id et une quantité
         panier;
-        
-        
 
         let produit = addArticle(panier); // on recupere l'article qu'on stock dans un tableau puis dans le local storage
         produit; 
-        
-
     });
     
    function valide(){        
         let choix = new Choix();
         return choix;          
    }
+
+   
 
    function saveArticle(produit){
     return localStorage.setItem("commande",JSON.stringify(produit));  
@@ -67,9 +65,9 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Demande de l'article en
     let chercheCouleur= stock.find(p=> p.couleur==produit.couleur);
     
     
-    console.log(produit.couleur);
+    //console.log(produit.couleur);
     //console.log(produit.id);
-    
+     
 
     if (chercheId && chercheCouleur != undefined){
        let quantite = JSON.parse(chercheCouleur.quantite) + JSON.parse(produit.quantite);

@@ -84,8 +84,9 @@ if (commande==null || commande.length==0){ // Lorsque le localstorage est vide o
                     let qte = document.getElementsByClassName("itemQuantity");                                 
                     for(let i=0; i<qte.length;i++){   // pour chaque article present dans le localstorage                                        
                         qte[i].addEventListener("change",function(){ // on va ecouter le changement dans itemQuantity   
+                            
                             prixTotalArticle=0;   // on réinitialise le prix total
-                            totalQuantite=0;   // on reinitialise la quantité totale                                                                                     
+                            totalQuantite=0;   // on reinitialise la quantité totale                                                                                                          
                             let nvelleCommande = new Quantite(commande[i].id,commande[i].couleur,this.value); // on crée un nouvel objet avec la valeur lue dans itemQuantity                                     
                             commande.splice(i,1,nvelleCommande); // On remplace les données de l'article selectionné dans le localstorage    
                             localStorage.clear; // on vide le localstorage
@@ -98,7 +99,9 @@ if (commande==null || commande.length==0){ // Lorsque le localstorage est vide o
                                         totalQuantite+= JSON.parse(commande[i].quantite);//on definit la nouvelle quantité totale du panier
                                         document.getElementById('totalQuantity').innerText=totalQuantite;// on affiche le nouveau prix total
                                         document.getElementById('totalPrice').innerText=prixTotalArticle; // on affiche la nouvelle quantité totale
-                                    })              
+                                    })
+                                    .catch((erreur)=> console.log(erreur))
+                                .catch((erreur)=> console.log(erreur))              
                             }
                             
                         })
@@ -107,7 +110,7 @@ if (commande==null || commande.length==0){ // Lorsque le localstorage est vide o
 
                     // Suppression d'élements du panier
                     let supprimer = document.getElementsByClassName("deleteItem");// on récupere tous les élements ayant pour classe deleteItem
-                    for(let i=0; i<supprimer.length;i++){/**  @for pour chaque élement ayant pour classe deleteItem*/
+                    for(let i=0; i<supprimer.length;i++){/**  @for pour chaque élement ayant pour classe deleteItem*/ 
                         supprimer[i].addEventListener("click", ()=>{  // lorsqu'on clique dessus 
                             alert(`Vous avez supprimé ${panier.name} ${commande[i].couleur} du panier !`); 
                             prixTotalArticle=0; // On réinitialise le prix total du panier
@@ -123,7 +126,9 @@ if (commande==null || commande.length==0){ // Lorsque le localstorage est vide o
                                             totalQuantite+= JSON.parse(commande[i].quantite);//on définit la nouvelle quantité totale du panier
                                             document.getElementById('totalQuantity').innerText=totalQuantite;// on affiche le nouveau prix total
                                             document.getElementById('totalPrice').innerText=prixTotalArticle; // on affiche la nouvelle quantité totale
-                                        })              
+                                        })  
+                                        .catch((erreur)=> console.log(erreur))
+                                    .catch((erreur)=> console.log(erreur))
                             }                            
                         })
                     }                                 
@@ -210,11 +215,11 @@ if (commande==null || commande.length==0){ // Lorsque le localstorage est vide o
          *  @if champs du formulaire vide afficher une alerte
          * @else pas de match avec le regex afficher alerte
          */
-        
         if(prenom.value=="" || nom.value=="" || adresse.value=="" || ville.value=="" || email.value==""){
             alert("Veuillez remplir les champs vides !");
             event.preventDefault();        
-        }else{
+        }
+        else{
             alert("Veuillez vérifier les champs non valide !");
             event.preventDefault();
         }        

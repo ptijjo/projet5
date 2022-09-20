@@ -87,8 +87,8 @@ fetch(`http://localhost:3000/api/products/${produit}`)
                 saveArticle(stock); // On sauvegarde le nouveau panier            
             }
         })
-        .catch((erreur)=> res.status(400).json({erreur}))
-    .catch((erreur)=> res.status(500).json({erreur}))
+        .catch((erreur)=> console.log(erreur))
+    .catch((erreur)=> console.log(erreur));
 
     
         

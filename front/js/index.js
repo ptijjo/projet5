@@ -28,7 +28,7 @@ fetch("http://localhost:3000/api/products")
       }      
     })
     //Affiche l'erreur si la requête ne s'execute pas correctement
-    .catch((erreur)=> res.status(400).json({erreur}))
+    .catch((erreur)=> console.log(erreur))
 
    // Affiche ce message si pas de réponse de le base de donnée 
   .catch(()=>{

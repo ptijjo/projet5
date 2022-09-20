@@ -86,7 +86,8 @@ if (commande==null || commande.length==0){ // Lorsque le localstorage est vide o
                         qte[i].addEventListener("change",function(){ // on va ecouter le changement dans itemQuantity   
                             
                             prixTotalArticle=0;   // on réinitialise le prix total
-                            totalQuantite=0;   // on reinitialise la quantité totale                                                                                                          
+                            totalQuantite=0;   // on reinitialise la quantité totale    
+                            this.value = Math.abs(this.value);                                                                                                      
                             let nvelleCommande = new Quantite(commande[i].id,commande[i].couleur,this.value); // on crée un nouvel objet avec la valeur lue dans itemQuantity                                     
                             commande.splice(i,1,nvelleCommande); // On remplace les données de l'article selectionné dans le localstorage    
                             localStorage.clear; // on vide le localstorage

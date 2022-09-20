@@ -1,21 +1,21 @@
-//const produit = window.location.search.split("?").join("").substr(3); //Recupère l'id sur l'Url
-
+// Récupération de l'id depuis l'url de la page
 const str = window.location.href;
 const url = new URL(str);
 const produit = url.searchParams.get("id");
-console.log(produit);
 
 
 
-fetch(`http://localhost:3000/api/products/${produit}`)// Recherce de l'article en fonction de l'id sur l'url
+// Requete GET afin de récupérer un produit spécifique avec son id présent dans la base de donées
+fetch(`http://localhost:3000/api/products/${produit}`)
     .then (data => data.json())
         .then (canape => {
-            document.getElementById("title").innerText=`${canape.name}`; // affichage du nom en fonction de l'id sur URL
-            document.getElementById("price").innerText=`${canape.price}`;// le prix
-            document.getElementById("description").innerText=`${canape.description}`;// descritption
-            document.querySelector(".item__img").innerHTML=`<img src="${canape.imageUrl}" alt="${canape.altTxt}"/>`; //Sa photo
+            //Inserer en format text les caractéristiques du produit trouvé en base de données
+            document.getElementById("title").innerText=`${canape.name}`; // Insertion du nom 
+            document.getElementById("price").innerText=`${canape.price}`;// Insertion du prix
+            document.getElementById("description").innerText=`${canape.description}`;// Insertion de la descritption
+            document.querySelector(".item__img").innerHTML=`<img src="${canape.imageUrl}" alt="${canape.altTxt}"/>`; //Insertion de la photo
 
-            // Affichage des couleurs disponibles en fonction de l'article   
+            // Affichage des différentes couleurs disponibles en fonction de l'article   
             canape.colors.forEach(element => {  
             document.getElementById("colors").innerHTML+= `<option value="${element}">${element}</option>;`;            
             });
@@ -24,7 +24,7 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Recherce de l'article e
             let choixCouleur=document.getElementById("colors");         
             let quantite=document.getElementById("quantity");                    
 
-            // Définition d'une classe avec un id une couleur et une quantité
+            // Définition d'une classe avec un id, une couleur et une quantité
             class Choix{   
                 constructor(){
                     this.id=produit,
@@ -33,14 +33,20 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Recherce de l'article e
                 }         
             }
             
-            document.getElementById("addToCart").addEventListener("click",()=>{ //lorsqu'on click sur ajouter au panier   
-                let panier =valide(); //on crée un objet avec une couelur un id et une quantité
+            // Ajouter l'article au panier
+            document.getElementById("addToCart").addEventListener("click",()=>{ //lorsqu'on click sur le bouton ajouter au panier   
+                let panier =valide(); //on crée un objet avec une couleur un id et une quantité
                 panier;
-                if(panier.couleur.length==0){ // si on ne choisit pas de couleur on a un message d'alerte
+
+                // si on ne choisit pas de couleur on a un message d'alerte
+                if(panier.couleur.length==0){ 
                     alert("Veuillez choisir une couleur");
-                }else if(panier.quantite<=0){
+                }
+                // si on a une quantité negative on reçoit message d'alerte
+                else if(panier.quantite<=0){
                     alert("Veuillez choisir une quantité positive et non nulle !");
-                }else{
+                }                
+                else{
                     alert(`Vous venez d'ajouter ${panier.quantite} ${canape.name} ${panier.couleur} au panier !`); // alerte nous disant qu'on a rajouté un article au panier
                     let produit = addArticle(panier); // on recupere l'article qu'on stock dans un tableau puis dans le local storage
                     produit; 
@@ -48,7 +54,7 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Recherce de l'article e
                 }
             });
             
-            // Fonction qui permet de créer un article    
+            // Fonction qui permet de créer un article avec une couleur un id et une quantité   
             function valide(){         
                 let choix = new Choix();
                 return choix;          
@@ -82,6 +88,7 @@ fetch(`http://localhost:3000/api/products/${produit}`)// Recherce de l'article e
             }
         })
         .catch((erreur)=> res.status(400).json({erreur}))
+    .catch((erreur)=> res.status(500).json({erreur}))
 
     
         

@@ -44,7 +44,9 @@ class Contact{
 
 
 if (commande==null || commande.length==0){ // Lorsque le localstorage est vide on affiche ce message
-    document.getElementById("cart__items").innerHTML= `<p> Votre panier est vide</p>`;
+    const panier_vide = document.createElement("h2");
+    document.getElementById("cart__items").appendChild(panier_vide)
+    panier_vide.textContent= ` Votre panier est vide `;
 }
 else{ // sinon     
     for (let i=0; i<commande.length; ++i){ // on affiche tous les articles presents dans le localstorage
@@ -73,7 +75,8 @@ else{ // sinon
                                                     </div>
                                                 </div>
                                             </div>
-                                        </article>`;                                        
+                                        </article>`;                    
+                                        
                     prixTotalArticle+= panier.price*JSON.parse(commande[i].quantite);//le prix total est égale a la somme des prix de chaque article x par sa quantité  dans le localstorage                  
                     totalQuantite+= JSON.parse(commande[i].quantite);//la quantité totale est la somme de toutes les quantités des articles dans le localstorage
                     document.getElementById('totalQuantity').innerText=totalQuantite; //on affiche le prix total
@@ -228,6 +231,7 @@ else{ // sinon
             window.location.href=`./confirmation.html?id=${idCommande}`; 
             break;             
         }
+        
         /**
          *  @if champs du formulaire vide afficher une alerte
          * @else pas de match avec le regex afficher alerte

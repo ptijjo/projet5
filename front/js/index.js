@@ -28,13 +28,14 @@ fetch("http://localhost:3000/api/products")
       }      
     })
     //Affiche l'erreur si la requête ne s'execute pas correctement
-    .catch((erreur)=> console.log(erreur))
+    
 
    // Affiche ce message si pas de réponse de le base de donnée 
   .catch(()=>{
-    const erreur = document.createElement("p");
-    erreur.innerHTML = '<strong style="font-size: 2em; color: green">Veuillez essayer plutard !</strong>';
-    document.getElementById("items").appendChild(erreur);
+    const erreur = document.createElement("h2");
+    document.querySelector("#items").appendChild(erreur);
+    erreur.textContent = 'Veuillez essayer plutard !';
+    
   });
 
 

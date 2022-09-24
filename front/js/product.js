@@ -75,8 +75,8 @@ fetch(`http://localhost:3000/api/products/${produit}`)
                 else{  // si non vide on va sérialiser les données du localstorage
                     stock=JSON.parse(stock);
                 } 
-                let chercheId = stock.find(p => p.id == produit.id);//on cherche une correspondance avec le nouvel id et un id deja present dans le localstorage
-                let chercheCouleur= stock.find(p=> p.couleur==produit.couleur);//on cherche une correspondance avec la nouvelle couleur et une couleur deja present dans le localstorage
+                let chercheId = stock.find(p => p.id === produit.id);//on cherche une correspondance avec le nouvel id et un id deja present dans le localstorage
+                let chercheCouleur= stock.find(p=> p.couleur===produit.couleur);//on cherche une correspondance avec la nouvelle couleur et une couleur deja present dans le localstorage
                 if (chercheId && chercheCouleur != undefined){// si l'id et la couleur corresponde a un article dans le localstorage
                     let quantite = JSON.parse(chercheCouleur.quantite) + JSON.parse(produit.quantite);
                     chercheCouleur.quantite=quantite; //la quantité sera egale a la quantité du nouvelle article + l'article deja present
